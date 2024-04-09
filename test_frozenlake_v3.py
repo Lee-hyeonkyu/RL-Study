@@ -1,15 +1,15 @@
 
-import gym
-from gym.envs.registration import register
+import gymnasium
+from gymnasium.envs.registration import register
 import readchar 
 import colorama as cr
 
 
 cr.init(autoreset=True)
-gym.envs.registration.register(id='FrozenLake-v3',
-entry_point='gym.envs.toy_text:FrozenLakeEnv', kwargs={'map_name':'4x4', 'is_slippery':False})
+gymnasium.envs.registration.register(id='FrozenLake-v3',
+entry_point='gymnasium.envs.toy_text:FrozenLakeEnv', kwargs={'map_name':'4x4', 'is_slippery':False})
 
-env = gym.make('FrozenLake-v3', render_mode='ansi')
+env = gymnasium.make('FrozenLake-v3', render_mode='ansi')
 env.reset()
 print(env.render())
 

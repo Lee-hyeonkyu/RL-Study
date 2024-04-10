@@ -6,7 +6,7 @@ import random
 
 
 def rand_argmax(v):
-    a = np.max(v)
+    a = np.amax(v)
     indices = np.nonzero(v == a)[0]
     return random.choice(indices)
 
@@ -26,26 +26,26 @@ num_episodes = 1000
 
 rList = []
 
+for _ in range(num_episodes):
+    state = env.reset()
+    rAll = 0
+    done = False
 
-state = env.reset()
+    while not done:
+        if type(state) is tuple:
+            state = state[0]
+        action = rand_argmax(Q[state, :])
+        new_state, reward, done, _, _ = env.step(action)
 
+        Q[state, action] = reward + np.max(Q[new_state, :])
 
-print(Q[state[0] :])
+        rAll += reward
+        state = new_state
 
+    rList.append(rAll)
 
-# for _ in range(num_episodes):
-#     state = env.reset()
-#     rAll = 0
-#     done = False
-
-#     while not done:
-
-#         action = rand_argmax(Q[state, :])
-#         new_state, reward, done, _, _ = env.step(action)
-
-#         Q[state[0], action] = np.max(Q[new_state])
-
-#         rAll += reward
-#         state = new_state
-
-#     rList.append(rAll)
+print("Success rate: " + str(sum(rList) / num_episodes))
+print("Final Q-Table Values")
+print(Q)
+plt.bar(range(len(rList)), rList, color="blue")
+plt.show()

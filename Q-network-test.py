@@ -10,9 +10,7 @@ from collections import deque
 EPSILON_START = 1.0
 EPSILON_END = 0.02
 EPSILON_DECAY = 1000
-MAX_EP = 2000
-REWARD_ACC = list()
-LOSS_ACC = list()
+MAX_EP = 2500
 discount_factor = 0.99
 torch.manual_seed(1234)
 np.random.seed(1234)
@@ -95,13 +93,11 @@ while step != MAX_EP:
     loss.backward()
     optimizer.step()
 
-    if step % 100 == 0:
+    if step % 1000 == 0:
         print()
         print("Step", step)
         print("Avg Reward", np.mean(rList))
         print("Loss", loss)
-        REWARD_ACC.append(np.mean(rList))
-        LOSS_ACC.append(loss.item())
 
     step += 1
 

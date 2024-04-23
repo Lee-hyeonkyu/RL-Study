@@ -31,7 +31,7 @@ class DQN(nn.Module):
     def act(self, state):
         state_t = torch.as_tensor(state, dtype=torch.float32)
         q_values = self.forward(state_t)
-        max_q_values = torch.argmax(state_t)
+        max_q_values = torch.argmax(q_values)
         action = max_q_values.detach().item()
         return action
 
@@ -272,3 +272,5 @@ while step != MAX_EP:
             print("ALPHA", ALPHA)
 
     step += 1
+
+print(sum(REWARD_BUFFER) / MAX_EP)
